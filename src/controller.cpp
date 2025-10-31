@@ -1484,7 +1484,7 @@ namespace drachtio {
                 else {
                     DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: discarding invalid message";
                 }
-                if(n==0) {
+                if(test==0) {
                     STATS_COUNTER_INCREMENT(STATS_COUNTER_SIP_RESPONSES_OUT, {{"method", sip->sip_request->rq_method_name},{"code", "400"}})
                     nta_msg_treply( m_nta, msg, 400, NULL, TAG_END() ) ;
                     return -1 ;
