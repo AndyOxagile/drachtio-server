@@ -1458,13 +1458,13 @@ namespace drachtio {
             }
             // additional sanity checks on headers
             if (sip->sip_error) {
-                auto error_header = sip->sip_error;                
+                auto error_header = sip->sip_error;
                 auto er_arr = error_header->er_common;
                 sip_header_t *sh = (sip_header_t *)er_arr;
-                unsigned n;              
+                unsigned n;
                 for (n = 0; sh; sh = sh->sh_next)
                   n++;
-                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: sip error count: " << n;                
+                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: sip error count: " << n;
 
                 unsigned test = 0;
                 if (error_header->er_common[0].h_data && error_header->er_common[0].h_len > 0) {
@@ -1473,11 +1473,11 @@ namespace drachtio {
 
                     // User-Agent: Sorenson Videophone mercury-web/2.4.2 SSV/5
                     if(n == 1 && error_header->er_common[0].h_len > 20) {
-                        std::string test_string((const char *) error_header->er_common[0].h_data, 20);                        
+                        std::string test_string((const char *) error_header->er_common[0].h_data, 20);
                         if(test_string == "User-Agent: Sorenson") {
                             test = 1;
                             DR_LOG(log_info) << "DrachtioController::processMessageStatelessly: HOTFIX: ignore discarding for duplicated User-Agent: Sorenson header";
-                        } 
+                        }
                     }
 
                 }
