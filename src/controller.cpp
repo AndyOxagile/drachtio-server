@@ -1464,7 +1464,7 @@ namespace drachtio {
                 DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify sizeof(er_arr): " << sizeof(er_arr) ;
                 DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify sizeof(*er_arr): " << sizeof(*er_arr);
                 DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify 0: " << (char *)error_header->er_common[0].h_data;
-                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify 0 - l: " << (char *)error_header->er_common[0].h_len;
+                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify 0 - l: " << error_header->er_common[0].h_len;
                 DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify 0 - suc: " << (char *)error_header->er_common[0].h_succ;
                 DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify 1: " << (char *)error_header->er_common[1].h_data;
 
