@@ -1458,29 +1458,38 @@ namespace drachtio {
             }
             // additional sanity checks on headers
             if (sip->sip_error) {
-                auto error_header = sip->sip_error;
+                auto error_header = sip->sip_error;                
                 auto er_arr = error_header->er_common;
-                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify start";
-                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify 0: " << (char *)er_arr[0].h_data;
-                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify 0 - l: " << er_arr[0].h_len;
-
                 sip_header_t *sh = (sip_header_t *)er_arr;
                 unsigned n;              
                 for (n = 0; sh; sh = sh->sh_next)
                   n++;
-                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify 0 - count: " << n;                
-                
+                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: sip error count: " << n;                
 
+                unsigned test = 0;
                 if (error_header->er_common[0].h_data && error_header->er_common[0].h_len > 0) {
                     std::string error_string((const char *) error_header->er_common[0].h_data, error_header->er_common[0].h_len);
                     DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: discarding message due to error: " << error_string;
+
+                    // User-Agent: Sorenson Videophone mercury-web/2.4.2 SSV/5
+                    if(n == 1 && error_header->er_common[0].h_len > 20) {
+                        std::string test_string((const char *) error_header->er_common[0].h_data, 20);
+                        DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: test string: " << test_string;
+                        if(test_string == "User-Agent: Sorenson") {
+                            test = 1;
+                            DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: ignore discarding modify eq!!!: ";
+                        } 
+                    }
+
                 }
                 else {
                     DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: discarding invalid message";
                 }
-                STATS_COUNTER_INCREMENT(STATS_COUNTER_SIP_RESPONSES_OUT, {{"method", sip->sip_request->rq_method_name},{"code", "400"}})
-                nta_msg_treply( m_nta, msg, 400, NULL, TAG_END() ) ;
-                return -1 ;
+                if(n==0) {
+                    STATS_COUNTER_INCREMENT(STATS_COUNTER_SIP_RESPONSES_OUT, {{"method", sip->sip_request->rq_method_name},{"code", "400"}})
+                    nta_msg_treply( m_nta, msg, 400, NULL, TAG_END() ) ;
+                    return -1 ;
+                }
             }
             
             // spammer check
