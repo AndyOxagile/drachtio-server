@@ -1460,7 +1460,6 @@ namespace drachtio {
             if (sip->sip_error) {
                 auto error_header = sip->sip_error;
                 DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify start";
-                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify start: " << error_header->er_common[0].h_data;
                 DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify start: " << error_header->er_common[0];
                 if (error_header->er_common[0].h_data && error_header->er_common[0].h_len > 0) {
                     std::string error_string((const char *) error_header->er_common[0].h_data, error_header->er_common[0].h_len);
