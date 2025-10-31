@@ -1463,7 +1463,6 @@ namespace drachtio {
                 DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify start";
                 DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify 0: " << (char *)er_arr[0].h_data;
                 DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify 0 - l: " << er_arr[0].h_len;
-                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify 0 - name: " << (char *)error_header.er_name;
 
                 sip_header_t *sh = (sip_header_t *)er_arr;
                 unsigned n;              
