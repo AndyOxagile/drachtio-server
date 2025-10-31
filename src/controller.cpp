@@ -1461,12 +1461,16 @@ namespace drachtio {
                 auto error_header = sip->sip_error;
                 auto er_arr = error_header->er_common;
                 DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify start";
-                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify sizeof(er_arr): " << sizeof(er_arr) ;
-                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify sizeof(*er_arr): " << sizeof(*er_arr);
-                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify 0: " << (char *)error_header->er_common[0].h_data;
-                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify 0 - l: " << error_header->er_common[0].h_len;
-                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify 0 - suc: " << (char *)error_header->er_common[0].h_succ;
-                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify 1: " << (char *)error_header->er_common[1].h_data;
+                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify 0: " << (char *)er_arr[0].h_data;
+                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify 0 - l: " << er_arr[0].h_len;
+                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify 0 - name: " << (char *)error_header.er_name;
+
+                sip_header_t *sh = (sip_header_t *)er_arr;
+                unsigned n;              
+                for (n = 0; sh; sh = sh->sh_next)
+                  n++;
+                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify 0 - count: " << n;                
+                
 
                 if (error_header->er_common[0].h_data && error_header->er_common[0].h_len > 0) {
                     std::string error_string((const char *) error_header->er_common[0].h_data, error_header->er_common[0].h_len);
