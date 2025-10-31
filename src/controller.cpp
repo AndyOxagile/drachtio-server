@@ -1473,11 +1473,10 @@ namespace drachtio {
 
                     // User-Agent: Sorenson Videophone mercury-web/2.4.2 SSV/5
                     if(n == 1 && error_header->er_common[0].h_len > 20) {
-                        std::string test_string((const char *) error_header->er_common[0].h_data, 20);
-                        DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: test string: " << test_string;
+                        std::string test_string((const char *) error_header->er_common[0].h_data, 20);                        
                         if(test_string == "User-Agent: Sorenson") {
                             test = 1;
-                            DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: ignore discarding modify eq!!!: ";
+                            DR_LOG(log_info) << "DrachtioController::processMessageStatelessly: HOTFIX: ignore discarding for duplicated User-Agent: Sorenson header";
                         } 
                     }
 
