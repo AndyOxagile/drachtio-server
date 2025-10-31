@@ -1459,8 +1459,11 @@ namespace drachtio {
             // additional sanity checks on headers
             if (sip->sip_error) {
                 auto error_header = sip->sip_error;
+                auto er_arr = error_header->er_common;
                 DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify start";
+                DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify start: " << (sizeof(er_arr)/sizeof(*er_arr));
                 DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: modify start: " << (char *)error_header->er_common[0].h_data;
+                                
                 if (error_header->er_common[0].h_data && error_header->er_common[0].h_len > 0) {
                     std::string error_string((const char *) error_header->er_common[0].h_data, error_header->er_common[0].h_len);
                     DR_LOG(log_error) << "DrachtioController::processMessageStatelessly: discarding message due to error: " << error_string;
